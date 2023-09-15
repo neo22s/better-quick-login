@@ -1,0 +1,54 @@
+/* Styles for error messages */
+.quick-login-error {
+    background-color: #ffff33; /* Yellow background color */
+    color: #333; /* Dark text color for better visibility on yellow */
+    padding: 10px; /* Padding for spacing */
+    border: 1px solid #cccc00; /* Yellow border */
+    margin-bottom: 10px; /* Margin to separate messages */
+    text-align: center; /* Center the text horizontally */
+}
+
+/* Styles for notice messages */
+.quick-login-notice {
+    background-color: #0073aa; /* Blue background color */
+    color: #fff; /* White text color */
+    padding: 10px; /* Padding for spacing */
+    border: 1px solid #005e8d; /* Blue border */
+    margin-bottom: 10px; /* Margin to separate messages */
+    text-align: center; /* Center the text horizontally */
+}
+
+/* CSS for error message */
+.quick-login-error::before {
+    content: "\274C"; /* Unicode character code for the "❌" emoji */
+    display: inline-block;
+    margin-right: 5px; /* Adjust spacing as needed */
+    font-size: 24px; /* Adjust the font size as needed */
+    color: red; /* Keep the red color for error messages */
+}
+
+/* CSS for success/notice message */
+.quick-login-notice::before {
+    content: "\2705"; /* Unicode character code for the "✅" emoji */
+    display: inline-block;
+    margin-right: 5px; /* Adjust spacing as needed */
+    font-size: 24px; /* Adjust the font size as needed */
+    color: green; /* Change the color to green for success/notice messages */
+}
+
+/* Center the text within the form */
+.quick-login-form form {
+    display: flex; /* Use flexbox for inline display */
+    align-items: center; /* Vertically center the form elements */
+}
+
+/* Allow the input to grow and fill available space */
+.quick-login-form input.input {
+    flex: 1;
+    margin-right: 10px; /* Add spacing between the input and button */
+}
+
+/* Allow the button to size based on content */
+.quick-login-form button {
+    min-width: auto;
+}
