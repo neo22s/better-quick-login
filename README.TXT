@@ -3,8 +3,8 @@ Contributors: deambulando
 Donate link: https://paypal.me/chema/10EUR
 Tags: passwordless, login, quick login, authentication, user management, reCAPTCHA, widget, auth
 Requires at least: 6.0
-Tested up to: 6.3
-Stable tag: 1.0
+Tested up to: 6.4
+Stable tag: 1.1
 Requires PHP: 8
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -65,6 +65,9 @@ In the plugin settings, you can enter your reCAPTCHA key. This will enable reCAP
 You can use the provided widget named "Quick Login Widget" to add the login form to your site's sidebar.
 
 == Changelog ==
+
+= 1.1 =
+* Compatible WP 6.4
 
 = 1.0 =
 * Initial release.

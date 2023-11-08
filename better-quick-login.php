@@ -3,7 +3,7 @@
  * Plugin Name: Better Quick Login
  * Plugin URI: https://garridodiaz.com/better-quick-login/
  * Description: Passwordless login system for WordPress.
- * Version: 1.0
+ * Version: 1.1
  * Text Domain: better-quick-login
  * Author: Chema
  * Author URI: https://garridodiaz.com
@@ -39,6 +39,7 @@ class BetterQuickLogin
         add_action('admin_menu', [$this, 'addAdminMenu']);
         add_shortcode('quicklogin', array($this, 'loginForm'));
         add_filter('plugin_row_meta', [$this, 'addPluginRowMeta'], 10, 2);
+        add_filter('plugin_action_links_better-quick-login/better-quick-login.php',[$this,  'addSettingLinks']);
         add_filter('the_content', [$this, 'displayMessage']);
         register_activation_hook(self::MAIN_FILE, [$this, 'setDefaultOptions']);
     }
@@ -311,6 +312,24 @@ class BetterQuickLogin
         );
 
         return $plugin_meta;
+    }
+
+    /**
+     * add link to settings next to activate deactivate
+     * @param [type] $links [description]
+     */
+    function addSettingLinks($links) 
+    {
+        $settings_page_url = admin_url('options-general.php?page=bql-settings');
+
+        $settings_link = sprintf(
+            '<a href="%1$s">%2$s</a>',
+            $settings_page_url,
+            esc_html_x('Settings', 'verb', 'better-quick-login')
+        );
+
+        array_unshift($links, $settings_link);
+        return $links;
     }
 
     /**
