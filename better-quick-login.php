@@ -3,7 +3,7 @@
  * Plugin Name: Better Quick Login
  * Plugin URI: https://garridodiaz.com/better-quick-login/
  * Description: Passwordless login system for WordPress.
- * Version: 1.1
+ * Version: 1.2
  * Text Domain: better-quick-login
  * Author: Chema
  * Author URI: https://garridodiaz.com
@@ -14,7 +14,7 @@ defined('ABSPATH') or die('Slow down cowboy');
 
 require_once(plugin_dir_path(__FILE__) . 'classes/widget.php');
 
-class BetterQuickLogin
+class BQLC_BetterQuickLogin
 {
 
     const MAIN_FILE = __FILE__;
@@ -37,7 +37,7 @@ class BetterQuickLogin
         add_action('login_enqueue_scripts', [$this, 'enqueueStyles']);
         add_action('admin_init', [$this, 'registerPluginSettings']);
         add_action('admin_menu', [$this, 'addAdminMenu']);
-        add_shortcode('quicklogin', array($this, 'loginForm'));
+        add_shortcode('bqlc_quicklogin', array($this, 'loginForm'));
         add_filter('plugin_row_meta', [$this, 'addPluginRowMeta'], 10, 2);
         add_filter('plugin_action_links_better-quick-login/better-quick-login.php',[$this,  'addSettingLinks']);
         add_filter('the_content', [$this, 'displayMessage']);
@@ -46,9 +46,8 @@ class BetterQuickLogin
 
     public function displayMessage($content) { 
         if ( isset(self::$message) ){
-            $html =  include(plugin_dir_path(self::MAIN_FILE) . 'templates/message.php');
+            require(plugin_dir_path(self::MAIN_FILE) . 'templates/message.php');
             self::$message = NULL;
-            return $html.$content;
         }
 
         return $content;
@@ -77,10 +76,13 @@ class BetterQuickLogin
 
 
     public function registerLoginWidget() {
-        register_widget('BetterQuickLoginWidget');
+        register_widget('BQLC_BetterQuickLoginWidget');
     }
 
-
+    /**
+     * this is the login form that appears together at the wp-login.php view
+     * @return HTML
+     */
     public function customLoginForm() { 
         if ( get_option('bql_login_form') == 1 ){
             ob_start();
@@ -92,7 +94,10 @@ class BetterQuickLogin
         }
     }
 
-
+    /**
+     * loginform when using the shortcode
+     * @return html 
+     */
     public function loginForm() {
         ob_start();
         $template =  (is_user_logged_in()) ? 'already-logged.php':'login-form.php';
@@ -126,7 +131,7 @@ class BetterQuickLogin
                 // Store the token and user ID in the database 
                 update_user_meta($user->ID, 'quicklogin_token', $token);
 
-                // get the edirect url after login
+                // get the redirect url after login
                 $redirect_URL = NULL;
                 if (strpos($_SERVER['REQUEST_URI'], 'wp-login.php') !== false)
                     $redirect_URL = home_url();
@@ -341,7 +346,7 @@ class BetterQuickLogin
         if ((isset($_GET['page']) && $_GET['page'] === 'bql-settings') && !isset($_COOKIE['bql_donation_message_closed'])) {
             echo '<div id="donation-message" class="notice notice-info is-dismissible" style="background-color: #f5f5f5; border-left: 4px solid #0073aa; padding: 10px;">
                 <p style="font-size: 16px;">';
-            echo __('Enjoy using our plugin? Consider <a href="https://paypal.me/chema/10EUR" target="_blank" id="donate-link">making a donation</a> to support our work! THANKS!', 'better-quick-login');
+            echo 'Enjoy using our plugin? Consider <a href="https://paypal.me/chema/10EUR" target="_blank" id="donate-link">making a donation</a> to support our work! THANKS!', 'better-quick-login';
             echo '</p></div>';
         }
     }
@@ -393,9 +398,9 @@ class BetterQuickLogin
 
     public static function currentURL() {
         if (isset($_SERVER['REQUEST_URI'])) {
-            $req_uri = $_SERVER['REQUEST_URI'];
+            $req_uri = sanitize_url($_SERVER['REQUEST_URI']);
 
-            $home_path = trim(parse_url(home_url(), PHP_URL_PATH), '/');
+            $home_path = trim(wp_parse_url(home_url(), PHP_URL_PATH), '/');
             $home_path_regex = sprintf('|^%s|i', preg_quote($home_path, '|'));
 
             // Trim path info from the end and the leading home path from the front.
@@ -413,7 +418,7 @@ class BetterQuickLogin
 }
 
 // Initialize the plugin
-new BetterQuickLogin();
+new BQLC_BetterQuickLogin();
 
 
 

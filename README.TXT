@@ -1,11 +1,11 @@
 === Better Quick Login ===
 Contributors: deambulando
 Donate link: https://paypal.me/chema/10EUR
-Tags: passwordless, login, quick login, authentication, user management, reCAPTCHA, widget, auth
+Tags: passwordless, login, quick login, authentication, auth
 Requires at least: 6.0
-Tested up to: 6.4
-Stable tag: 1.1
-Requires PHP: 8
+Tested up to: 6.5.3
+Stable tag: 1.2
+Requires PHP: 8.0
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ The Quick Login plugin provides a convenient way for users to log in to your Wor
 - Option to force one session per user (limit subscribers to one active session at a time)
 - Customizable login form (can be enabled/disabled)
 - Auto-login via unique tokens and email links
-- reCAPTCHA support for enhanced security
+- Google reCAPTCHA support for enhanced security
 - Widget option for adding the login form to your site's sidebar
 
 == Installation ==
@@ -31,7 +31,7 @@ The Quick Login plugin provides a convenient way for users to log in to your Wor
 
 == Usage ==
 
-To add the Quick Login form to your content, you can use the provided shortcode: `[quicklogin]`. You can also use the custom block named "Quick Login Block" in the Gutenberg editor.
+To add the Quick Login form to your content, you can use the provided shortcode: `[bqlc_quicklogin]`. You can also use the custom block named "Quick Login Block" in the Gutenberg editor.
 
 To customize plugin settings, navigate to 'Quick Login' under the 'Settings' menu in the WordPress dashboard. You can also enable reCAPTCHA for added security.
 
@@ -46,7 +46,7 @@ To add the Quick Login form to your site's sidebar, you can use the provided wid
 
 = How can I add the Quick Login form to my content? =
 
-You can use the provided shortcode `[quicklogin]` ,Widget or use the custom block named "Quick Login Block" in the Gutenberg editor.
+You can use the provided shortcode `[bqlc_quicklogin]` ,Widget or use the custom block named "Quick Login Block" in the Gutenberg editor.
 
 = Can I customize the appearance of the login form? =
 
@@ -58,7 +58,7 @@ In the plugin settings, enable the option "Force One Session Per User." This wil
 
 = How can I enable reCAPTCHA for added security? =
 
-In the plugin settings, you can enter your reCAPTCHA key. This will enable reCAPTCHA on the login form to enhance security.
+In the plugin settings, you can enter your Google reCAPTCHA key. This will enable reCAPTCHA on the login form to enhance security. Plese see https://www.google.com/recaptcha/ https://www.google.com/intl/en-GB/policies/terms/
 
 = How can I add the Quick Login form to my site's sidebar? =
 
@@ -66,16 +66,13 @@ You can use the provided widget named "Quick Login Widget" to add the login form
 
 == Changelog ==
 
-= 1.1 =
-* Compatible WP 6.4
+= 1.2 =
+* Compatible WP 6.5
+* Security improvements
 
 = 1.0 =
 * Initial release.
 
-== Upgrade Notice ==
-
-= 1.0 =
-Initial release.
 
 == Support ==
 

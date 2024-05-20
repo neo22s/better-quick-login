@@ -8,11 +8,11 @@
     category: 'common',
 
     edit: function () {
-      return el('div', { className: 'quick-login-block' }, '[quicklogin]');
+      return el('div', { className: 'quick-login-block' }, '[bqlc_quicklogin]');
     },
 
     save: function () {
-      return el('div', { className: 'quick-login-block' }, '[quicklogin]');
+      return el('div', { className: 'quick-login-block' }, '[bqlc_quicklogin]');
     },
   });
 })();

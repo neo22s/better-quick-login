@@ -1,8 +1,8 @@
 <?php defined('ABSPATH') or die('Slow down cowboy');?>
 
-<?php if (isset(BetterQuickLogin::$message)) :?>
-    <div class="quick-login-<?php echo BetterQuickLogin::$message['type']; ?>">
-        <?php echo BetterQuickLogin::$message['message']; ?>
+<?php if ( isset( BQLC_BetterQuickLogin::$message ) ) :?>
+    <div class="quick-login-<?php echo esc_html(BQLC_BetterQuickLogin::$message['type']); ?>">
+        <?php echo esc_html(BQLC_BetterQuickLogin::$message['message']); ?>
     </div>
     <?php 
 endif;

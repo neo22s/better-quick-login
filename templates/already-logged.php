@@ -7,12 +7,12 @@
 ?>
 
 <p>
-    <?php echo __('You are currently logged in as', 'better-quick-login'); ?>
-    <a href="<?php echo $authorPostsUrl; ?>" title="<?php echo $current_user->display_name; ?>">
-    	<?php echo $current_user->display_name; ?>
+    <?php esc_html_e('You are currently logged in as', 'better-quick-login'); ?>
+    <a href="<?php echo esc_html( $authorPostsUrl ); ?>" title="<?php echo esc_html( $current_user->display_name ); ?>">
+    	<?php echo esc_html( $current_user->display_name ); ?>
     </a>
     -
-    <a href="<?php echo $logout_link; ?>" title="<?php echo __('Log out of this account', 'better-quick-login'); ?>">
-    	<?php echo __('Log out', 'better-quick-login'); ?> &raquo;
+    <a href="<?php echo esc_html( $logout_link) ; ?>" title="<?php esc_html_e('Log out of this account', 'better-quick-login'); ?>">
+    	<?php esc_html_e('Log out', 'better-quick-login'); ?> &raquo;
     </a>
 </p>

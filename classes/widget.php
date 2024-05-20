@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') or die('Slow down cowboy');
 
-class BetterQuickLoginWidget extends WP_Widget {
+class BQLC_BetterQuickLoginWidget extends WP_Widget {
     // Widget constructor
     public function __construct() {
         parent::__construct(
