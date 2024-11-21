@@ -3,7 +3,7 @@
  * Plugin Name: Better Quick Login
  * Plugin URI: https://garridodiaz.com/better-quick-login/
  * Description: Passwordless login system for WordPress.
- * Version: 1.2
+ * Version: 1.2.1
  * Text Domain: better-quick-login
  * Author: Chema
  * Author URI: https://garridodiaz.com
