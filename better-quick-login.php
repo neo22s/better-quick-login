@@ -44,7 +44,7 @@ class BQLC_BetterQuickLogin
         register_activation_hook(self::MAIN_FILE, [$this, 'setDefaultOptions']);
     }
 
-    public function displayMessage($content) { 
+    public function displayMessage($content) {
         if ( isset(self::$message) ){
             require(plugin_dir_path(self::MAIN_FILE) . 'templates/message.php');
             self::$message = NULL;
@@ -66,11 +66,11 @@ class BQLC_BetterQuickLogin
     public function enqueueBlockAssets() {
         // Enqueue your JavaScript file for the custom block
         wp_enqueue_script(
-            'quick-login-block', 
-            plugin_dir_url(__FILE__) . 'blocks/quick-login-block.js', 
-            ['wp-blocks', 'wp-element'], 
-            filemtime(plugin_dir_path(__FILE__) . 'blocks/quick-login-block.js'), 
-            true 
+            'quick-login-block',
+            plugin_dir_url(__FILE__) . 'blocks/quick-login-block.js',
+            ['wp-blocks', 'wp-element'],
+            filemtime(plugin_dir_path(__FILE__) . 'blocks/quick-login-block.js'),
+            true
         );
     }
 
@@ -83,7 +83,7 @@ class BQLC_BetterQuickLogin
      * this is the login form that appears together at the wp-login.php view
      * @return HTML
      */
-    public function customLoginForm() { 
+    public function customLoginForm() {
         if ( get_option('bql_login_form') == 1 ){
             ob_start();
             include(plugin_dir_path(self::MAIN_FILE) . 'templates/message.php');
@@ -96,7 +96,7 @@ class BQLC_BetterQuickLogin
 
     /**
      * loginform when using the shortcode
-     * @return html 
+     * @return html
      */
     public function loginForm() {
         ob_start();
@@ -107,7 +107,7 @@ class BQLC_BetterQuickLogin
 
     /**
      * Handles the request of a login and sends the email with a link to login
-     * 
+     *
      */
     public function loginRequest() {
 
@@ -116,7 +116,7 @@ class BQLC_BetterQuickLogin
 
         $nonce = ( isset( $_POST['nonce']) ) ? sanitize_key( $_POST['nonce'] ) : false;
 
-        if ( isset( $_POST['ql_username_email']) 
+        if ( isset( $_POST['ql_username_email'])
             AND wp_verify_nonce( $nonce, 'quick_login_request' ) ) {
 
             $user_login = sanitize_text_field( $_POST['ql_username_email'] );
@@ -128,7 +128,7 @@ class BQLC_BetterQuickLogin
                 // Generate a unique token (for simplicity, using a timestamp)
                 $token = md5(uniqid().$user->ID).'-'.strtotime('+'.get_option('bql_expire_time').' minutes');
 
-                // Store the token and user ID in the database 
+                // Store the token and user ID in the database
                 update_user_meta($user->ID, 'quicklogin_token', $token);
 
                 // get the redirect url after login
@@ -140,14 +140,14 @@ class BQLC_BetterQuickLogin
 
                 // Send an email to the user with the login link
                 $login_link = add_query_arg(array('ql_token' => $token, 'nonce' => wp_create_nonce('quick_login')), $redirect_URL);
-                
+
                 $subject = __('Your Log in Link', 'better-quick-login');
                 $message = __('Click the following link to log in: ', 'better-quick-login'). $login_link;
                 wp_mail($user->user_email, $subject, $message);
 
                 self::$message = ['type'=>'notice', 'message'=>__('Please check your email. You will soon receive an email with a login link.', 'better-quick-login')];
             }
-            else 
+            else
                 self::$message = ['type'=>'error', 'message'=>__('There was a problem sending your email. Please try again or contact an admin.', 'better-quick-login')] ;
 
         }
@@ -156,7 +156,7 @@ class BQLC_BetterQuickLogin
 
     /**
      * Handle auto-login when the token and nonce is present in the URL
-     * 
+     *
      */
     function autoLogin() {
 
@@ -164,10 +164,10 @@ class BQLC_BetterQuickLogin
             return;
 
         $nonce = sanitize_key( $_GET['nonce'] );
-        
+
         //review the token is sent and the nonce is correct
-        if ( isset($_GET['ql_token']) AND isset( $_GET['nonce'] ) 
-            AND wp_verify_nonce( $nonce, 'quick_login' ) 
+        if ( isset($_GET['ql_token']) AND isset( $_GET['nonce'] )
+            AND wp_verify_nonce( $nonce, 'quick_login' )
         ) {
 
             $token = sanitize_text_field( $_GET['ql_token'] );
@@ -183,7 +183,7 @@ class BQLC_BetterQuickLogin
 
                     // Log in the user
                     wp_set_current_user($user[0]->ID);
-                    wp_set_auth_cookie($user[0]->ID, get_option('bql_keep_logged_in')==1 ? TRUE:FALSE); 
+                    wp_set_auth_cookie($user[0]->ID, get_option('bql_keep_logged_in')==1 ? TRUE:FALSE);
                     delete_user_meta($user[0]->ID, 'quicklogin_token');
                     wp_redirect(self::currentURL());
                     exit;
@@ -204,11 +204,11 @@ class BQLC_BetterQuickLogin
      * from https://sleeksoft.in/limit-only-one-session-per-user-wordpress/
      */
     public function forceOneSessionPerUser() {
-        
+
         if ( get_option('bql_force_one_session') == 1 ) {
             //Get current user who is logged in
             $user = wp_get_current_user();
-            
+
             //Check if user's role is subscriber
             //if( in_array('subscriber', $user->roles) ){
                 //Get current user's session
@@ -216,7 +216,7 @@ class BQLC_BetterQuickLogin
 
                 //Get all his active wordpress sessions
                 $all_sessions = $sessions->get_all();
-            
+
                 //If there is more than one session then destroy all other sessions except the current session.
                 if ( count( $all_sessions ) > 1 ) {
                     $sessions->destroy_others( wp_get_session_token() );
@@ -235,7 +235,7 @@ class BQLC_BetterQuickLogin
         load_plugin_textdomain( 'better-quick-login', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
-    
+
     /**
      * Add the admin menu for plugin settings.
      */
@@ -255,7 +255,7 @@ class BQLC_BetterQuickLogin
     public function registerPluginSettings(){
         register_setting('bql-settings', 'bql_recaptcha_key', [
             'type' => 'string',
-            'default' => '', 
+            'default' => '',
             'sanitize_callback' => 'sanitize_text_field',
         ]);
 
@@ -323,7 +323,7 @@ class BQLC_BetterQuickLogin
      * add link to settings next to activate deactivate
      * @param [type] $links [description]
      */
-    function addSettingLinks($links) 
+    function addSettingLinks($links)
     {
         $settings_page_url = admin_url('options-general.php?page=bql-settings');
 
@@ -395,20 +395,15 @@ class BQLC_BetterQuickLogin
         }
     }
 
-
     public static function currentURL() {
         if (isset($_SERVER['REQUEST_URI'])) {
-            $req_uri = sanitize_url($_SERVER['REQUEST_URI']);
+            // Get the current URL without any query parameters
+            $url = home_url(add_query_arg(array()));
 
-            $home_path = trim(wp_parse_url(home_url(), PHP_URL_PATH), '/');
-            $home_path_regex = sprintf('|^%s|i', preg_quote($home_path, '|'));
+            // Remove the 'ql_token' and 'nonce' parameters
+            $url = remove_query_arg(array('ql_token', 'nonce'), $url);
 
-            // Trim path info from the end and the leading home path from the front.
-            $req_uri = ltrim($req_uri, '/');
-            $req_uri = preg_replace($home_path_regex, '', $req_uri);
-            $req_uri = trim(home_url(), '/') . '/' . ltrim($req_uri, '/');
-
-            return $req_uri;
+            return $url;
         }
 
         return ''; // Return an empty string if REQUEST_URI is not set

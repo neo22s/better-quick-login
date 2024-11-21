@@ -3,8 +3,8 @@ Contributors: deambulando
 Donate link: https://paypal.me/chema/10EUR
 Tags: passwordless, login, quick login, authentication, auth
 Requires at least: 6.0
-Tested up to: 6.5.3
-Stable tag: 1.2
+Tested up to: 6.7
+Stable tag: 1.2.1
 Requires PHP: 8.0
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -65,6 +65,10 @@ In the plugin settings, you can enter your Google reCAPTCHA key. This will enabl
 You can use the provided widget named "Quick Login Widget" to add the login form to your site's sidebar.
 
 == Changelog ==
+
+= 1.2.1 =
+* Compatible WP 6.7
+* Issue login form sending nonce and ql_token when not needed
 
 = 1.2 =
 * Compatible WP 6.5
